@@ -47,15 +47,13 @@ func enterCredentials(httpClient *http.Client, referURL string, userid string, p
 	if result == "success" {
 		json.Unmarshal(*response["data"], &respdata)
 		json.Unmarshal(*respdata["request_id"], &reqid)
-		err := enterPIN(httpClient,
+		return enterPIN(httpClient,
 			referURL,
 			twofaURL,
 			userid,
 			reqid,
 			pin)
-		if err != nil {
-			return err
-		}
+
 	}
 	return errors.New("Login Failed")
 }
@@ -115,9 +113,7 @@ func Login(KiteLoginURL string, userid string, password string, pin string) erro
 	}
 
 	defer r.Body.Close()
-	err = enterCredentials(httpClient,
+	return enterCredentials(httpClient,
 		r.Request.URL.String(),
 		userid, password, pin)
-
-	return err
 }
