@@ -16,9 +16,10 @@ func enterCredentials(httpClient *http.Client, referURL string, userid string, p
 		"password": {password},
 	}
 
-	const twofaURL = "https://kite.zerodha.com/api/login"
+	const twofaURL = "https://kite.zerodha.com/api/twofa"
+	const loginURL = "https://kite.zerodha.com/api/login"
 
-	req, err := http.NewRequest("POST", twofaURL, strings.NewReader(data.Encode()))
+	req, err := http.NewRequest("POST", loginURL, strings.NewReader(data.Encode()))
 	if err != nil {
 		return err
 	}
